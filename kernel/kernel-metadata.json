@@ -1,0 +1,17 @@
+{
+  "is_private": true,
+  "title": "Beginner EDA",
+  "dataset_sources": [],
+  "id": "yurimdias/beginner-eda",
+  "language": "rmarkdown",
+  "keywords": [],
+  "id_no": 1558294,
+  "kernel_sources": [],
+  "kernel_type": "script",
+  "competition_sources": [
+    "demand-forecasting-kernels-only"
+  ],
+  "enable_internet": false,
+  "enable_gpu": false,
+  "code_file": "beginner-eda.Rmd"
+}

@@ -19,9 +19,9 @@ library(gridExtra)
 Let's import the data!
 
 ```{r}
-data.train = fread('./input/train.csv', header = TRUE, sep = ',')
-data.test = fread('./input/test.csv', header = TRUE, sep = ',')
-submission.sample = fread('./input/sample_submission.csv', header = TRUE, sep = ',')
+data.train = fread('../input/train.csv', header = TRUE, sep = ',')
+data.test = fread('../input/test.csv', header = TRUE, sep = ',')
+submission.sample = fread('../input/sample_submission.csv', header = TRUE, sep = ',')
 ```
 
 Let's work only on the training data and ignore the pre-selected test data for now.

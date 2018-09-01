@@ -1,0 +1,17 @@
+{
+  "competition_sources": [
+    "demand-forecasting-kernels-only"
+  ],
+  "kernel_sources": [],
+  "keywords": [],
+  "title": "Beginner EDA",
+  "id_no": 1558294,
+  "enable_internet": false,
+  "kernel_type": "script",
+  "dataset_sources": [],
+  "language": "rmarkdown",
+  "is_private": true,
+  "id": "yurimdias/beginner-eda",
+  "code_file": "beginner-eda.Rmd",
+  "enable_gpu": false
+}

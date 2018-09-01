@@ -1,2 +1,38 @@
+---
+title: "Item demand forecast challenge"
+author: Yuri Matheus Dias
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+---
+
 # Item demand competition
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(data.table) 
+library(lubridate)
+library(parallel)
+library(gridExtra)
+```
+
+Let's import the data!
+
+```{r}
+data.train = fread('./input/train.csv', header = TRUE, sep = ',')
+data.test = fread('./input/test.csv', header = TRUE, sep = ',')
+submission.sample = fread('./input/sample_submission.csv', header = TRUE, sep = ',')
+```
+
+Let's work only on the training data and ignore the pre-selected test data for now.
+
+```{r}
+summary(data.train)
+```
+
+We can transform that data into lubridate's format for easier handling.
+
+```{r}
+data.train$date = lubridate::ymd(data.train$date)
+```
 

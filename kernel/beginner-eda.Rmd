@@ -6,6 +6,11 @@ date: "`r format(Sys.time(), '%d/%m/%Y')`"
 
 # Item demand competition
 
+My goal with this notebook is to give a general EDA on the data, and maybe execute a sample model or two for prediction.
+I want to learn how time series works, and train my R knowledge with this.
+
+# Data
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -31,8 +36,99 @@ summary(data.train)
 ```
 
 We can transform that data into lubridate's format for easier handling.
+We can also make `store` and `item` factors, as we know that they are just identificators from the overview page.
 
 ```{r}
-data.train$date = lubridate::ymd(data.train$date)
+#data.train$date = lubridate::ymd(data.train$date)
+data.train[,
+   `:=`(
+     date = ymd(date),
+     store = as.factor(store),
+     item = as.factor(item)
+   )
+]
+summary(data.train)
+str(data.train)
 ```
+
+Great, this also shows us that there are no missing values and nothing else to transform for now.
+Let's take a look into the data.
+
+I'll take a note from other kernels and add these features:
+```{r}
+data.train[,
+   `:=`(
+     weekday = lubridate::wday(date, label = TRUE, abbr = TRUE),
+     month = month(date, label = TRUE, abbr = TRUE),
+     year = year(date)
+   )
+]
+```
+
+
+# EDA
+
+First, total sales per day.
+
+```{r}
+total.sales = data.train %>%
+  group_by(date) %>%
+  summarise(total = sum(sales))
+
+ggplot(
+  data = total.sales,
+  aes(x = date, y = total)
+) +
+  geom_line()
+```
+There is definitely seasonality and trend in this.
+
+```{r}
+total.sales.store = data.train %>%
+  group_by(date, store) %>%
+  summarise(total = sum(sales))
+
+ggplot(
+  data = total.sales.store,
+  aes(x = date, y = total, color = store)
+) +
+  geom_line()
+```
+Pretty, but doesn't tell us much, other than some stores sell more than others.
+
+Let's try another way:
+```{r}
+ggplot(
+  data = data.train %>%
+    group_by(store) %>%
+    summarise(total = sum(sales)),
+  aes(x = store, y = total, fill = store)
+) +
+  geom_bar(stat = 'identity') +
+  scale_y_continuous(
+    labels = scales::format_format(
+      big.mark = ".", decimal.mark = ",", scientific = FALSE
+    ) # it's absolutely ridiculous how this isn't already built-in!
+  )
+```
+Some stores generate almost double the amount of sales in total!
+#7 there is not looking so good.
+
+Let's do the same for products.
+
+```{r}
+ggplot(
+  data = data.train %>%
+    group_by(item) %>%
+    summarise(total = sum(sales)),
+  aes(x = item, y = total, fill = item)
+) +
+  geom_bar(stat = 'identity') +
+  theme(
+    axis.text.x = element_text(angle = 60, hjust = 1.0, vjust = 1.0)
+  ) + 
+  guides(fill = FALSE, color = FALSE)
+```
+Chaotic, but hey! Colors! Some items sell almost 3x as much as others, so that's interesting to see with the plots too.
+
 

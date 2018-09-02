@@ -81,6 +81,7 @@ ggplot(
 ) +
   geom_line()
 ```
+
 There is definitely seasonality and trend in this.
 
 ```{r}
@@ -94,9 +95,11 @@ ggplot(
 ) +
   geom_line()
 ```
+
 Pretty, but doesn't tell us much, other than some stores sell more than others.
 
 Let's try another way:
+
 ```{r}
 ggplot(
   data = data.train %>%
@@ -111,6 +114,7 @@ ggplot(
     ) # it's absolutely ridiculous how this isn't already built-in!
   )
 ```
+
 Some stores generate almost double the amount of sales in total!
 #7 there is not looking so good.
 
@@ -129,6 +133,6 @@ ggplot(
   ) + 
   guides(fill = FALSE, color = FALSE)
 ```
-Chaotic, but hey! Colors! Some items sell almost 3x as much as others, so that's interesting to see with the plots too.
 
+Chaotic, but hey! Colors! Some items sell almost 3x as much as others, so that's interesting to see with the plots too.
 
